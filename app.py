@@ -7,8 +7,13 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello():
-    return "hello world"
+@app.route('/home')
+def home():
+    return "Home page"
+
+@app.route('/about')
+def about():
+    return "About page"    
 
 
 
