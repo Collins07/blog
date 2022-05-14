@@ -12,7 +12,50 @@
    {%endif%}
 </head>
 <body>
-    {% block content %} {% endblock %}
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a href="" class="navbar-brand mr-4">My Blog</a>
+                <button class="navbar-toggleer-icon" type="button" data-toggle="collapse" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a href="" class="nav-item nav-link">Home</a>
+                        <a href="" class="nav-item nav-link">About</a>
+                    </div>
+
+                    <div class="navbar-nav">
+                        <a href="" class="nav-item nav-link">Login</a>
+                        <a href="" class="nav-item nav-link">Register</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>My Sidebar</h3>
+                    <p class="text-muted"> Add any piece of information here.Thank You
+                        <ul>
+                            <li>Latest Posts</li>
+                            <li>Announcements</li>
+                            <li>Calender</li>
+                            <li>etc</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
