@@ -1,3 +1,6 @@
+SECRET_KEY = '8f8c465d65eee4aacfe130cc64db80a7'
+
+
 class Config:
     '''
     General configuration parent class
