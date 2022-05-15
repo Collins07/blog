@@ -11,3 +11,13 @@ class RegistrationForm(FlaskForm):
     repeat_password = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
 
     submit = SubmitField('Sign-Up')
+
+
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+
+    password = PasswordField('Password', validators=[DataRequired()])
+
+
+    submit = SubmitField('Sign-In')    
