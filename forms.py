@@ -1,6 +1,6 @@
 from xml.dom import ValidationErr
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, DateTimeField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, EqualTo, Length,Email
 
 
@@ -18,6 +18,6 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
 
     password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField("Remember Me")
 
-
-    submit = SubmitField('Sign-In')    
+    submit = SubmitField('Login')    
