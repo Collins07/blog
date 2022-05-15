@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash
 from forms import RegistrationForm, LoginForm
 
 
@@ -35,6 +35,8 @@ def about():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'{ form.username.data} your account has been created', 'success')
     return render_template('register.html', form=form)
 
 
