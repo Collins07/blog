@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt,bcrypt
 from forms import RegistrationForm, LoginForm
 
 
@@ -9,6 +10,7 @@ app.config.from_pyfile('config.py')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 class User (db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,6 +67,10 @@ def about():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
         flash(f'{ form.username.data} your account has been created', 'success')
         return redirect(url_for('home'))
     return render_template('register.html', form=form)
