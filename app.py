@@ -7,9 +7,12 @@ from forms import RegistrationForm, LoginForm, UpdateAccountForm
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 
 
+
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -121,6 +124,9 @@ def account():
         db.session.commit()
         flash('Your account has successfully been updated', 'success')
         return redirect (url_for('account'))
+    elif request.method =='GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email  
     image_file = url_for('static', filename='profile/' + current_user.image_file)
     return render_template('account.html', image_file=image_file, form=form)
 

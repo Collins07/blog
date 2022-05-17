@@ -9,7 +9,7 @@
                 <p class="text-secondary">{{current_user.email}}</p>
             </div>
         </div>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
                 <fieldset>
                     <legend class="border-bottom mb-4">Your Account</legend>
@@ -41,6 +41,7 @@
                         {{ form.username(class = "form-control form-control-lg") }}
                         {% endif %}
                     </div>
+                
                     
                 </fieldset>
                 <div id="btn1" class="form-group">
