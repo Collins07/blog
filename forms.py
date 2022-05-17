@@ -2,7 +2,7 @@ from xml.dom import ValidationErr
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, EqualTo, Length,Email, ValidationError
-from app import User
+
 
 
 class RegistrationForm(FlaskForm):
@@ -13,15 +13,15 @@ class RegistrationForm(FlaskForm):
 
     submit = SubmitField('Sign-Up')
 
-    def validate_field(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationErr('Use a different username')
+    # def validate_field(self, username):
+    #     user = User.query.filter_by(username=username.data).first()
+    #     if user:
+    #         raise ValidationErr('Use a different username')
 
-    def validate_field(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationErr('Use a different email')
+    # def validate_field(self, email):
+    #     user = User.query.filter_by(email=email.data).first()
+    #     if user:
+    #         raise ValidationErr('Use a different email')
         
 
 

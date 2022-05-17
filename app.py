@@ -3,6 +3,7 @@ from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt,bcrypt
 from forms import RegistrationForm, LoginForm
+from flask_login import LoginManager
 
 
 app = Flask(__name__)
