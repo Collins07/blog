@@ -1,9 +1,9 @@
 from datetime import datetime
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, request, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt,bcrypt
 from forms import RegistrationForm, LoginForm
-from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user
+from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 
 
 app = Flask(__name__)
@@ -13,6 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 
 
 @login_manager.user_loader
@@ -95,7 +97,8 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         else:    
             flash('Log In Unsuccessful !', 'danger')    
     return render_template('login.html', form=form) 
@@ -105,6 +108,13 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route('/account')
+@login_required
+def account():
+    return render_template('account.html')
+
 
 
 
