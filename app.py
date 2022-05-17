@@ -1,8 +1,9 @@
 from datetime import datetime
+from fileinput import filename
 from flask import Flask, render_template, request, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt,bcrypt
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, UpdateAccountForm
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 
 
@@ -110,10 +111,18 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/account')
+@app.route('/account',methods=['GET', 'POST'])
 @login_required
 def account():
-    return render_template('account.html')
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has successfully been updated', 'success')
+        return redirect (url_for('account'))
+    image_file = url_for('static', filename='profile/' + current_user.image_file)
+    return render_template('account.html', image_file=image_file, form=form)
 
 
 
