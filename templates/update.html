@@ -1,0 +1,12 @@
+{% extends "base.html"%}
+{% block content %}
+        <article class="media content-section">
+            <div class="media-body">
+                <p href="{{url_for('post', post_id=post.id)}}" class="article-content">{{ post.content }}</p>
+                <div class="articel-metadata">
+                    by: <p  class="mr-2">{{post.author.username }}</a> <br>
+                    posted at:    <small class="text-muted"> {{ post.date_posted.strftime("%m/%d/%Y, %H:%M:%S") }}</small>
+                </div>
+            </div>
+        </article>
+{% endblock content%}

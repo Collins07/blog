@@ -37,9 +37,17 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')    
 
 
+
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=10)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
 
-    submit = SubmitField('Update')    
+    submit = SubmitField('Update') 
+
+
+
+class QuoteForm(FlaskForm):
+    title = StringField('Subject', validators=[DataRequired()])
+    content = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Comment')

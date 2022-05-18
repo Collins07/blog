@@ -3,7 +3,7 @@ from fileinput import filename
 from flask import Flask, render_template, request, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt,bcrypt
-from forms import RegistrationForm, LoginForm, UpdateAccountForm
+from forms import RegistrationForm, LoginForm, UpdateAccountForm, QuoteForm
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 
 
@@ -49,27 +49,12 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"        
 
 
-posts = [
-    {
-        'author':'Collins Nyakoe',
-        'title':'Blog1',
-        'content':'Software Development',
-        'date_posted':'April 27 2022'
-    },
-    {
-        'author':'Abaya Nyakoe',
-        'title':'Blog2',
-        'content':'Data Science',
-        'date_posted':'April 27 2022'
-    }
-]
-
-
 
 
 @app.route('/')
 @app.route('/home')
 def home():
+    posts = Post.query.all()
     return render_template('home.html', posts=posts)
 
 @app.route('/about')
@@ -129,6 +114,30 @@ def account():
         form.email.data = current_user.email  
     image_file = url_for('static', filename='profile/' + current_user.image_file)
     return render_template('account.html', image_file=image_file, form=form)
+
+
+
+@app.route('/post/new',methods=['GET', 'POST'])
+@login_required
+def new_comment():
+    form = QuoteForm()
+    if form.validate_on_submit():
+        post = Post(title= form.title.data, content=form.content.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your comment has been posted', 'success')
+        return redirect(url_for('home'))
+    return render_template('comment.html', form=form)
+
+
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('update.html', content=post.content, post=post)
+
+    
+
+
 
 
 
